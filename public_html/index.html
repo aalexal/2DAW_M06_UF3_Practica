@@ -1,16 +1,73 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
-        <div>TODO write content</div>
+        <h1>Pràctica Formularis</h1>
+        <input id="btnCrea" name="btnCrea" type="button" value="Crear nou formulari" >
+        <form name="creaForm" id="creaForm">
+            <div>
+                <label>Nom formulari: </label>
+                <input type="text">
+            </div>
+            <div>
+                <form name="creaCamp" id="creaCamp">
+                    <input name="nouCamp" value="Text" type="radio">Text<br>
+                    <input name="nouCamp" value="Radio" type="radio">Radio<br>
+                    <input name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
+                    <input name="nouCamp" value="Select" type="radio">Select<br>
+                    <input type="submit">
+                </form>
+            </div>
+        </form>
+
     </body>
+    <script>
+        btnCrear = document.getElementById("btnCrea");
+
+        btnCrear.addEventListener("click", creaForm);
+
+        function creaForm() {
+            var form = document.createElement("form");
+
+            var divNomForm = document.createElement("div");
+            var nomFormtxt = document.createTextNode("Nom formulari: ");
+            var nomForm = document.createElement("input");
+            nomForm.setAttribute("id", "nomForm");
+
+            divNomForm.appendChild(nomFormtxt);
+            divNomForm.appendChild(nomForm);
+
+            var divNouCamp = document.createElement("div");
+            var campoACrear = document.createTextNode("Selecciona camp a crear: ");
+            //Radio txt
+            var radioTxt = document.createElement("input");
+            var radioTxtTxt = document.createTextNode("Text");
+            radioTxt.setAttribute("id", "radioTxt");
+            radioTxt.setAttribute("name", "radioTxt");
+            radioTxt.setAttribute("type", "radio");
+            radioTxt.setAttribute("value", "Texto");
+
+            radioTxt.appendChild(radioTxtTxt);
+            divNouCamp.appendChild(campoACrear);
+            divNouCamp.appendChild(radioTxt);
+
+            //Radio radio
+            var radioRadio = document.createElement("input");
+            radioRadio.setAttribute("id", "radioRadio");
+            radioRadio.setAttribute("type", "radio");
+
+            var crearForm = document.createElement("button");
+            var crearFormtxt = document.createTextNode("Crear formulari");
+
+            form.appendChild(divNomForm);
+            form.appendChild(divNouCamp);
+            crearForm.appendChild(crearFormtxt);
+            form.appendChild(crearForm);
+            document.body.appendChild(form);
+        }
+    </script>
 </html>
