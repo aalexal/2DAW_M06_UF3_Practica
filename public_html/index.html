@@ -7,25 +7,124 @@
     </head>
     <body>
         <h1>Pràctica Formularis</h1>
-        <input id="btnCrea" name="btnCrea" type="button" value="Crear nou formulari" >
+        
         <form name="creaForm" id="creaForm">
             <div>
                 <label>Nom formulari: </label>
                 <input type="text">
             </div>
-            <div>
+            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou" onclick="nuevoForm()">
+            <div id="divCreaForm" style="display: none">
                 <form name="creaCamp" id="creaCamp">
-                    <input name="nouCamp" value="Text" type="radio">Text<br>
-                    <input name="nouCamp" value="Radio" type="radio">Radio<br>
-                    <input name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
-                    <input name="nouCamp" value="Select" type="radio">Select<br>
-                    <input type="submit">
+                    <input id="campText" name="nouCamp" value="Text" type="radio">Text<br>
+                    <input id="campRadio" name="nouCamp" value="Radio" type="radio">Radio<br>
+                    <input id="campCheckbox" name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
+                    <input id="campSelect" name="nouCamp" value="Select" type="radio">Select<br>
+                    <input id="submitTipusCamp" type="button" value="Acceptar" onclick="getOption()">
                 </form>
+            </div>
+            <div id="divTypeText" style="display: none">
+                <form name="textType" id="creaCamp">
+                    <label id="">Introdueix tipus de text que vols entrar</label><br>
+                    <input id="typeTxt" name="typeTxt" value="typeTxt" type="radio">Text<br>
+                    <input id="typeDigit" name="typeDigit" value="Radio" type="radio">Nombre<br>
+                    <input id="typeEmail" name="typeEmail" value="Checkbox" type="radio">Email<br>
+                    <input id="typeData" name="typeData" value="Select" type="radio">Data<br>
+                    <input id="typeFile" name="typeFile" value="Checkbox" type="radio">Document<br>
+                    <input id="submitTypeText" type="button" value="Acceptar" onclick="getTextOption()" >
+                </form>
+            </div>
+            <div>
+                <input id="inputText" name="inputText" type="text" hidden>
+                <input id="inputDigit" name="inputDigit" type="digit" hidden>
+                <input id="inputEmail" name="inputEmail" type="email" hidden>
+                <input id="inputData" name="inputData" type="date" hidden>
+                <input id="inputFile" name="inputFile" type="file" hidden>
+                <input id="acceptaValorText" name="acceptaValorText" type="button" hidden value="Acceptar">
             </div>
         </form>
 
     </body>
     <script>
+        
+        var btnCreaForm = document.getElementById("btnCreaForm");
+        var divCreaForm = document.getElementById("divCreaForm");
+        var divTypeText = document.getElementById("divTypeText");
+        var submitTipusCamp = document.getElementById("submitTipusCamp");
+        
+        //btn envia camp a crear de tipus text
+        var submitTypeText = document.getElementById("submitTypeText");
+        var campText = document.getElementById("campText");
+        var campRadio = document.getElementById("campRadio");
+        var campCheckBox = document.getElementById("campCheckbox");
+        var campSelect = document.getElementById("campSelect");
+        
+        
+        //radioButton tipus de text
+        
+        var typeTxt = document.getElementById("typeTxt");
+        var typeDigit = document.getElementById("typeDigit");
+        var typeEmail = document.getElementById("typeEmail");
+        var typeData = document.getElementById("typeData");
+        var typeFile = document.getElementById("typeFile");
+        
+        //inputs de x tipus
+        var inputText = document.getElementById("inputText");
+        var inputText = document.getElementById("inputText");
+    
+        function nuevoForm(){
+            if (divCreaForm.style.display === "none") {
+                divCreaForm.style.display = "block";
+              } else {
+                divCreaForm.style.display = "none";
+            }
+        }
+        
+        function getOption(){ 
+            
+            //amaguem formulari de nou camp
+
+            
+            //mostrem formulari de selecció de tipus de text
+            if (campText.checked) {
+               if (divTypeText.style.display === "none") {
+                divTypeText.style.display = "block";
+               }else {
+                divTypeText.style.display = "none";
+               }
+            }else if(campRadio.checked){
+                
+            }else if(campCheckBox.checked){
+                
+            }else if(campSelect.checked){
+                
+            }
+        }
+        function getTextOption(){
+            if (divTypeText.style.display === "none") {
+                divTypeText.style.display = "block";
+              } else {
+                divTypeText.style.display = "none";
+            }
+            if(typeTxt.checked){
+                inputText.removeAttribute("hidden");
+            
+            }else if(typeDigit.checked){
+                
+            }else if(typeEmail.checked){
+                
+            }else if(typeData.checked){
+                
+            }else if(typeFile.checked){
+                
+            }
+        }
+        
+        
+        
+        
+        
+        /*
         btnCrear = document.getElementById("btnCrea");
 
         btnCrear.addEventListener("click", creaForm);
@@ -69,5 +168,6 @@
             form.appendChild(crearForm);
             document.body.appendChild(form);
         }
+        */
     </script>
 </html>
