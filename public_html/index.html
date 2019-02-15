@@ -11,9 +11,9 @@
         <form name="creaForm" id="creaForm">
             <div>
                 <label>Nom formulari: </label>
-                <input type="text">
+                <input id="inputNomForm" type="text">
             </div>
-            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou" onclick="nuevoForm()">
+            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou" onclick="nouFormulari()">
             <div id="divCreaForm" style="display: none">
                 <form name="creaCamp" id="creaCamp">
                     <input id="campText" name="nouCamp" value="Text" type="radio">Text<br>
@@ -36,16 +36,17 @@
             </div>
             <div>
                 <input id="inputText" name="inputText" type="text" hidden>
-                <input id="inputDigit" name="inputDigit" type="digit" hidden>
+                <input id="inputDigit" name="inputDigit" type="number" hidden min="0" max="1000">
                 <input id="inputEmail" name="inputEmail" type="email" hidden>
                 <input id="inputData" name="inputData" type="date" hidden>
                 <input id="inputFile" name="inputFile" type="file" hidden>
-                <input id="acceptaValorText" name="acceptaValorText" type="button" hidden value="Acceptar">
+                <input id="acceptaValorText" name="acceptaValorText" type="button" hidden value="Acceptar" onclick="crearCamp()">
             </div>
         </form>
 
     </body>
     <script>
+        var inputNouForm = document.getElementById("inputNomForm");
         
         var btnCreaForm = document.getElementById("btnCreaForm");
         var divCreaForm = document.getElementById("divCreaForm");
@@ -70,21 +71,31 @@
         
         //inputs de x tipus
         var inputText = document.getElementById("inputText");
-        var inputText = document.getElementById("inputText");
-    
-        function nuevoForm(){
-            if (divCreaForm.style.display === "none") {
-                divCreaForm.style.display = "block";
-              } else {
+        var inputDigit = document.getElementById("inputDigit");
+        var inputEmail = document.getElementById("inputEmail");
+        var inputData = document.getElementById("inputData");
+        var inputFile = document.getElementById("inputFile");
+        var btnAcceptaTipusText = document.getElementById("acceptaValorText");
+        
+        //nou camp a crear
+        var nouCampForm = document.createElement("input");
+        var nouCampSelect = document.createElement("select");
+        function nouFormulari(){
+            //TODO     falta hacer control sobre id
+            var nouForm = document.createElement("form");
+            nouForm.setAttribute("id", inputNouForm.value);
+            
+            if (inputNouForm.value != "") {
+                if (divCreaForm.style.display === "none") {
+                    divCreaForm.style.display = "block";
+                    document.body.appendChild(nouForm);
+                } 
+            }else{
                 divCreaForm.style.display = "none";
             }
         }
         
         function getOption(){ 
-            
-            //amaguem formulari de nou camp
-
-            
             //mostrem formulari de selecció de tipus de text
             if (campText.checked) {
                if (divTypeText.style.display === "none") {
@@ -92,6 +103,7 @@
                }else {
                 divTypeText.style.display = "none";
                }
+               
             }else if(campRadio.checked){
                 
             }else if(campCheckBox.checked){
@@ -101,26 +113,38 @@
             }
         }
         function getTextOption(){
-            if (divTypeText.style.display === "none") {
-                divTypeText.style.display = "block";
-              } else {
-                divTypeText.style.display = "none";
-            }
+            acceptaValorText.removeAttribute("hidden");
             if(typeTxt.checked){
                 inputText.removeAttribute("hidden");
-            
             }else if(typeDigit.checked){
-                
+                inputDigit.removeAttribute("hidden");
             }else if(typeEmail.checked){
-                
+                inputEmail.removeAttribute("hidden");
             }else if(typeData.checked){
-                
+                inputData.removeAttribute("hidden");
             }else if(typeFile.checked){
-                
+                inputFile.removeAttribute("hidden");
             }
+            
+            
+            
         }
         
-        
+        function crearCamp(){
+            if (campText.checked && typeTxt.checked) {
+                nouCampForm.setAttribute("type", "text");
+            }else if (campText.checked && typeDigit.checked) {
+                nouCampForm.setAttribute("type", "number");
+            }else if (campText.checked && typeEmail.checked) {
+                nouCampForm.setAttribute("type", "email");
+            }else if (campText.checked && typeData.checked) {
+                nouCampForm.setAttribute("type", "date");
+            }else if (campText.checked && typeFile.checked) {
+                nouCampForm.setAttribute("type", "file");
+            }
+            nouForm.appendChild(nouCampForm);
+            
+        }
         
         
         
