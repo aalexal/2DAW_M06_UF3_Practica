@@ -7,20 +7,20 @@
     </head>
     <body>
         <h1>Pràctica Formularis</h1>
-        <button id="btnCrearForm" onclick="crearFormulari()">Crear nou formulari</button>
+        <button id="btnCrearForm">Crear nou formulari</button>
         <form name="creaForm" hidden id="creaForm">
             <div>
                 <label>Nom formulari: </label>
                 <input id="inputNomForm" type="text">
             </div>
-            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou" onclick="nouFormulari()">
+            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou">
             <div id="divCreaForm" style="display: none">
                 <form name="creaCamp" id="creaCamp">
                     <input id="campText" name="nouCamp" value="Text" type="radio">Text<br>
                     <input id="campRadio" name="nouCamp" value="Radio" type="radio">Radio<br>
                     <input id="campCheckbox" name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
                     <input id="campSelect" name="nouCamp" value="Select" type="radio">Select<br>
-                    <input id="submitTipusCamp" type="button" value="Acceptar" onclick="getOption()">
+                    <input id="submitTipusCamp" type="button" value="Acceptar">
                 </form>
             </div>
             <div id="divTypeText" style="display: none">
@@ -31,7 +31,7 @@
                     <input id="typeEmail" name="typeTxt" value="Checkbox" type="radio">Email<br>
                     <input id="typeData" name="typeTxt" value="Select" type="radio">Data<br>
                     <input id="typeFile" name="typeTxt" value="Checkbox" type="radio">Document<br>
-                    <input id="submitTypeText" type="button" value="Acceptar" onclick="getTextOption()" >
+                    <input id="submitTypeText" type="button" value="Acceptar" >
                 </form>
             </div>
             <div id="divCreaInput">                
@@ -40,8 +40,16 @@
                     <input id="inputEmail" name="inputEmail" type="email" hidden>
                     <input id="inputData" name="inputData" type="date" hidden>
                     <input id="inputFile" name="inputFile" type="file" hidden>
-                    <input id="acceptaValorText" name="acceptaValorText" type="button" hidden value="Acceptar" onclick="crearCamp()">              
+                    <input id="acceptaValorText" name="acceptaValorText" type="button" hidden value="Acceptar">              
             </div>
+            <div id="divTypeRadio" style="display: none">
+                <form id="typeRadio">
+                    <label>Introdueix quantitat d'opcions</label>
+                    <input id="quantitatRadioButtons" name="quantitatRadioButtons" type="number">
+                    <input id="btnQuantitatRadio" type="button" value="Acceptar">
+                </form>
+            </div>
+            
         </form>
 
     </body>
@@ -56,6 +64,7 @@
         var btnCreaForm = document.getElementById("btnCreaForm");
         var divCreaForm = document.getElementById("divCreaForm");
         var divTypeText = document.getElementById("divTypeText");
+        var divTypeRadio = document.getElementById("divTypeRadio");
         var divCreaInput = document.getElementById("divCreaInput");
         var submitTipusCamp = document.getElementById("submitTipusCamp");
 
@@ -68,7 +77,6 @@
 
 
         //radioButton tipus de text
-
         var typeTxt = document.getElementById("typeTxt");
         var typeDigit = document.getElementById("typeDigit");
         var typeEmail = document.getElementById("typeEmail");
@@ -82,13 +90,27 @@
         var inputData = document.getElementById("inputData");
         var inputFile = document.getElementById("inputFile");
         var btnAcceptaTipusText = document.getElementById("acceptaValorText");
-
+        
+        //inputs de tipus radio button
+        var btnQuantitatRadio = document.getElementById("btnQuantitatRadio");
+        var quantitatRadioButtons = document.getElementById("quantitatRadioButtons");
+        
         //nou camp a crear      
         var nouCampSelect = document.createElement("select");
 
         var formNouForm;
         var nouForm;
-
+        
+        var cont = 0;
+        
+        //esdeveniments
+        btnCrearForm.addEventListener("click", crearFormulari);
+        btnCreaForm.addEventListener("click",nouFormulari);
+        submitTipusCamp.addEventListener("click",getOption);
+        submitTypeText.addEventListener("click",getTextOption);
+        btnAcceptaTipusText.addEventListener("click",crearCamp);
+        btnQuantitatRadio.addEventListener("click", creaRadioButton);
+        
         function crearFormulari() {
             creaForm.style.display = "block";
             formNouForm = document.createElement("form");
@@ -118,7 +140,11 @@
                     divTypeText.style.display = "none";
                 }
             } else if (campRadio.checked) {
-
+                if (divTypeRadio.style.display === "none") {
+                    divTypeRadio.style.display = "block";
+                } else {
+                    divTypeRadio.style.display = "none";
+                }
             } else if (campCheckBox.checked) {
 
             } else if (campSelect.checked) {
@@ -166,7 +192,35 @@
             divCreaInput.style.display = "none";
             inputText.style.display = "none";
         }
-
+        
+        function creaRadioButton(){
+            var quantitat = quantitatRadioButtons.value;
+            inputNouForm.value;
+            
+            for (var i = 0; i < quantitat; i++) {
+                var espai = document.createElement("br");
+                var opRadi = document.createElement("input");
+                var txtOpRadi = document.createTextNode(prompt("Introdueix valor del Radio Button " + (i+1)));
+                var lblTxtRadi = document.createElement("label");
+                
+                lblTxtRadi.appendChild(txtOpRadi);
+                formNouForm.appendChild(lblTxtRadi);
+                formNouForm.insertBefore(opRadi, lblTxtRadi);
+                formNouForm.insertBefore(espai, opRadi);
+                
+                opRadi.setAttribute("type","radio");
+                opRadi.setAttribute("id", "op"+cont+"-" + i );
+                opRadi.setAttribute("name", "campRadi");
+                opRadi.setAttribute("value", txtOpRadi);
+                
+                document.body.appendChild(formNouForm);
+            }
+                
+            
+            cont++;
+        }
+        
+        
         /*
          btnCrear = document.getElementById("btnCrea");
          
