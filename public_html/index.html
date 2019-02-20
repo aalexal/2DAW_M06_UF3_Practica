@@ -3,24 +3,25 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--<script type="text/javascript" src="script.js"></script>-->
         <link rel="stylesheet" type="text/css" href="style.css"/>
     </head>
     <body>
         <h1>Pràctica Formularis</h1>
-        <button id="btnCrearForm">Crear nou formulari</button>
-        <form name="creaForm" hidden id="creaForm">
+        <button id="btnIniciCrearNouForm">Crear nou formulari</button>
+        <form name="formCrearNomForm" hidden id="formCrearNomForm">
             <div>
                 <label>Nom formulari: </label>
-                <input id="inputNomForm" type="text">
+                <input id="inputTxtNomNouForm" type="text">
             </div>
-            <input id="btnCreaForm" name="btnCrea" type="button" value="Crear un camp nou">
-            <div id="divCreaForm" style="display: none">
+            <input id="btnMostraCreaCamp" name="btnCrea" type="button" value="Crear un camp nou">
+            <div id="divSelectTypeCamp" style="display: none">
                 <form name="creaCamp" id="creaCamp">
-                    <input id="campText" name="nouCamp" value="Text" type="radio">Text<br>
-                    <input id="campRadio" name="nouCamp" value="Radio" type="radio">Radio<br>
-                    <input id="campCheckbox" name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
-                    <input id="campSelect" name="nouCamp" value="Select" type="radio">Select<br>
-                    <input id="submitTipusCamp" type="button" value="Acceptar">
+                    <input id="inputNouCampTypeText" name="nouCamp" value="Text" type="radio">Text<br>
+                    <input id="inputNouCampTypeRadio" name="nouCamp" value="Radio" type="radio">Radio<br>
+                    <input id="inputNouCampTypeCheckbox" name="nouCamp" value="Checkbox" type="radio">Checkbox<br>
+                    <input id="inputNouCampTypeSelect" name="nouCamp" value="Select" type="radio">Select<br>
+                    <input id="submitNouCampType" type="button" value="Acceptar">
                 </form>
             </div>
             <div id="divTypeText" style="display: none">
@@ -49,7 +50,13 @@
                     <input id="btnQuantitatRadio" type="button" value="Acceptar">
                 </form>
             </div>
-            
+            <div id="divTypeCheckbox" style="display: none">
+                <form id="typeCheckbox">
+                    <label>Introdueix quantitat d'opcions</label>
+                    <input id="txtQuantitatCheckbox" name="txtQuantitatCheckbox" type="number">
+                    <input id="btnQuantitatCheckbox" type="button" value="Acceptar">
+                </form>
+            </div>
         </form>
 
     </body>
@@ -57,31 +64,32 @@
         var form1 = document.getElementById("creaCamp");
         var form2 = document.getElementById("creaCamp2");
         
-        var creaForm = document.getElementById("creaForm");
-
-        var inputNouForm = document.getElementById("inputNomForm");
-
-        var btnCreaForm = document.getElementById("btnCreaForm");
-        var divCreaForm = document.getElementById("divCreaForm");
+        //Formulari afegir nom al form
+        var formCrearNomForm = document.getElementById("formCrearNomForm");       
+        var inputTxtNomNouForm = document.getElementById("inputTxtNomNouForm");
+        var btnMostraCreaCamp = document.getElementById("btnMostraCreaCamp");
+        
+        //inputs amb els diferents tipus d'inputs        
+        var inputNouCampTypeText = document.getElementById("inputNouCampTypeText");
+        var inputNouCampTypeRadio = document.getElementById("inputNouCampTypeRadio");
+        var inputNouCampTypeCheckbox = document.getElementById("inputNouCampTypeCheckbox");
+        var inputNouCampTypeSelect = document.getElementById("inputNouCampTypeSelect");
+        var submitNouCampType = document.getElementById("submitNouCampType");
+        
+        
+        var divSelectTypeCamp = document.getElementById("divSelectTypeCamp");
         var divTypeText = document.getElementById("divTypeText");
         var divTypeRadio = document.getElementById("divTypeRadio");
+        var divTypeCheckbox = document.getElementById("divTypeCheckbox");
         var divCreaInput = document.getElementById("divCreaInput");
-        var submitTipusCamp = document.getElementById("submitTipusCamp");
-
-        //btn envia camp a crear de tipus text
-        var submitTypeText = document.getElementById("submitTypeText");
-        var campText = document.getElementById("campText");
-        var campRadio = document.getElementById("campRadio");
-        var campCheckBox = document.getElementById("campCheckbox");
-        var campSelect = document.getElementById("campSelect");
-
-
+        
         //radioButton tipus de text
         var typeTxt = document.getElementById("typeTxt");
         var typeDigit = document.getElementById("typeDigit");
         var typeEmail = document.getElementById("typeEmail");
         var typeData = document.getElementById("typeData");
         var typeFile = document.getElementById("typeFile");
+        var submitTypeText = document.getElementById("submitTypeText");
 
         //inputs de x tipus
         var inputText = document.getElementById("inputText");
@@ -95,6 +103,10 @@
         var btnQuantitatRadio = document.getElementById("btnQuantitatRadio");
         var quantitatRadioButtons = document.getElementById("quantitatRadioButtons");
         
+        //inputs de tipus checkbox
+        var btnQuantitatCheckbox = document.getElementById("btnQuantitatCheckbox");
+        var txtQuantitatCheckbox = document.getElementById("txtQuantitatCheckbox");
+        
         //nou camp a crear      
         var nouCampSelect = document.createElement("select");
 
@@ -104,50 +116,55 @@
         var cont = 0;
         
         //esdeveniments
-        btnCrearForm.addEventListener("click", crearFormulari);
-        btnCreaForm.addEventListener("click",nouFormulari);
-        submitTipusCamp.addEventListener("click",getOption);
+        btnIniciCrearNouForm.addEventListener("click", crearFormulari);
+        btnMostraCreaCamp.addEventListener("click",nouFormulari);
+        submitNouCampType.addEventListener("click",getOption);
         submitTypeText.addEventListener("click",getTextOption);
         btnAcceptaTipusText.addEventListener("click",crearCamp);
         btnQuantitatRadio.addEventListener("click", creaRadioButton);
+        btnQuantitatCheckbox.addEventListener("click", creaCheckbox);
         
         function crearFormulari() {
-            creaForm.style.display = "block";
+            formCrearNomForm.style.display = "block";
             formNouForm = document.createElement("form");
         }
 
         function nouFormulari() {
             //TODO     falta hacer control sobre id
             //formNouForm = document.createElement("form");
-            formNouForm.setAttribute("id", inputNouForm.value);
+            formNouForm.setAttribute("id", inputTxtNomNouForm.value);
 
-            if (inputNouForm.value != "") {
-                if (divCreaForm.style.display === "none") {
-                    divCreaForm.style.display = "block";
+            if (inputTxtNomNouForm.value != "") {
+                if (divSelectTypeCamp.style.display === "none") {
+                    divSelectTypeCamp.style.display = "block";
                     //document.body.appendChild(nouForm);
                 }
             } else {
-                divCreaForm.style.display = "none";
+                divSelectTypeCamp.style.display = "none";
             }
         }
 
         function getOption() {
             //mostrem formulari de selecció de tipus de text
-            if (campText.checked) {
+            if (inputNouCampTypeText.checked) {
                 if (divTypeText.style.display === "none") {
                     divTypeText.style.display = "block";
                 } else {
                     divTypeText.style.display = "none";
                 }
-            } else if (campRadio.checked) {
+            } else if (inputNouCampTypeRadio.checked) {
                 if (divTypeRadio.style.display === "none") {
                     divTypeRadio.style.display = "block";
                 } else {
                     divTypeRadio.style.display = "none";
                 }
-            } else if (campCheckBox.checked) {
-
-            } else if (campSelect.checked) {
+            } else if (inputNouCampTypeCheckbox.checked) {
+                if (divTypeCheckbox.style.display === "none") {
+                    divTypeCheckbox.style.display = "block";
+                } else {
+                    divTypeCheckbox.style.display = "none";
+                }
+            } else if (inputNouCampTypeSelect.checked) {
 
             }
         }
@@ -168,15 +185,15 @@
 
         function crearCamp() {
             var nouCampForm = document.createElement("input");
-            if (campText.checked && typeTxt.checked) {
+            if (inputNouCampTypeText.checked && typeTxt.checked) {
                 nouCampForm.setAttribute("type", "text");
-            } else if (campText.checked && typeDigit.checked) {
+            } else if (inputNouCampTypeText.checked && typeDigit.checked) {
                 nouCampForm.setAttribute("type", "number");
-            } else if (campText.checked && typeEmail.checked) {
+            } else if (inputNouCampTypeText.checked && typeEmail.checked) {
                 nouCampForm.setAttribute("type", "email");
-            } else if (campText.checked && typeData.checked) {
+            } else if (inputNouCampTypeText.checked && typeData.checked) {
                 nouCampForm.setAttribute("type", "date");
-            } else if (campText.checked && typeFile.checked) {
+            } else if (inputNouCampTypeText.checked && typeFile.checked) {
                 nouCampForm.setAttribute("type", "file");
             }
             //nouForm.appendChild(nouCampForm);
@@ -192,15 +209,20 @@
         }
 
         function limpiaPantalla(){
-            divCreaForm.style.display = "none";
+            divSelectTypeCamp.style.display = "none";
             divTypeText.style.display = "none";
             divCreaInput.style.display = "none";
+            divTypeRadio.style.display = "none";
+            divTypeCheckbox.style.display = "none";
             inputText.style.display = "none";
         }
         
         function creaRadioButton(){
             var quantitat = quantitatRadioButtons.value;
-            inputNouForm.value;
+            //inputNouForm.value;
+            
+            var div = document.createElement("div");
+            div.setAttribute("id", "divRadio");
             
             for (var i = 0; i < quantitat; i++) {
                 var espai = document.createElement("br");
@@ -209,9 +231,13 @@
                 var lblTxtRadi = document.createElement("label");
                 
                 lblTxtRadi.appendChild(txtOpRadi);
-                formNouForm.appendChild(lblTxtRadi);
-                formNouForm.insertBefore(opRadi, lblTxtRadi);
-                formNouForm.insertBefore(espai, opRadi);
+                div.appendChild(lblTxtRadi);
+                div.insertBefore(opRadi, lblTxtRadi);
+                if(i !== 0){
+                    div.insertBefore(espai, opRadi);
+                }
+                
+                formNouForm.appendChild(div);
                 
                 opRadi.setAttribute("type","radio");
                 opRadi.setAttribute("id", "op"+cont+"-" + i );
@@ -221,6 +247,43 @@
                 document.body.appendChild(formNouForm);
             }
 
+            cont++;
+            limpiaPantalla();
+        }
+        
+        function creaCheckbox(){
+            var quantitat = txtQuantitatCheckbox.value;
+            
+            var div = document.createElement("div");
+            div.setAttribute("id", "divCheckbox");
+            
+            for (var i = 0; i < quantitat; i++) {                
+                var espai = document.createElement("br");
+                var inputCheckbox = document.createElement("input");
+                var txtInputCheckbox = document.createTextNode(prompt("Introdueix valor del Checkbox " + (i+1)));
+                var lblTxtCheckbox = document.createElement("label");
+                /*
+                lblTxtRadi.appendChild(txtOpRadi);
+                formNouForm.appendChild(lblTxtRadi);
+                formNouForm.insertBefore(opRadi, lblTxtRadi);
+                formNouForm.insertBefore(espai, opRadi);
+                */
+                lblTxtCheckbox.appendChild(txtInputCheckbox);
+                div.appendChild(lblTxtCheckbox);
+                div.insertBefore(inputCheckbox, lblTxtCheckbox);
+                if(i !== 0){
+                    div.insertBefore(espai, inputCheckbox);
+                }
+                
+                formNouForm.appendChild(div);
+                
+                inputCheckbox.setAttribute("type","checkbox");
+                inputCheckbox.setAttribute("id", "checkbox"+cont+"-" + i );
+                inputCheckbox.setAttribute("name", "campRadi");
+                inputCheckbox.setAttribute("value", txtInputCheckbox);
+                
+                document.body.appendChild(formNouForm);
+            }
             cont++;
             limpiaPantalla();
         }
