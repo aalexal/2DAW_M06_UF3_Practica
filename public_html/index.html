@@ -180,7 +180,12 @@
                 nouCampForm.setAttribute("type", "file");
             }
             //nouForm.appendChild(nouCampForm);
-            formNouForm.appendChild(nouCampForm);
+            
+            var lblNouInput = document.createElement("label");
+            
+            alert(inputText.innerText);
+            lblNouInput = inputText.value;
+            formNouForm.appendChild(lblNouInput);
             document.body.appendChild(formNouForm);
             
             limpiaPantalla();
@@ -215,9 +220,9 @@
                 
                 document.body.appendChild(formNouForm);
             }
-                
-            
+
             cont++;
+            limpiaPantalla();
         }
         
         
