@@ -57,6 +57,13 @@
                     <input id="btnQuantitatCheckbox" type="button" value="Acceptar">
                 </form>
             </div>
+            <div id="divTypeSelect" style="display: none">
+                <form id="typeSelect">
+                    <label>Introdueix quantitat d'opcions</label>
+                    <input id="txtQuantitatSelect" name="txtQuantitatSelect" type="number">
+                    <input id="btnQuantitatSelect" type="button" value="Acceptar">
+                </form>
+            </div>
         </form>
 
     </body>
@@ -81,6 +88,7 @@
         var divTypeText = document.getElementById("divTypeText");
         var divTypeRadio = document.getElementById("divTypeRadio");
         var divTypeCheckbox = document.getElementById("divTypeCheckbox");
+        var divTypeSelect = document.getElementById("divTypeSelect");
         var divCreaInput = document.getElementById("divCreaInput");
         
         //radioButton tipus de text
@@ -107,8 +115,13 @@
         var btnQuantitatCheckbox = document.getElementById("btnQuantitatCheckbox");
         var txtQuantitatCheckbox = document.getElementById("txtQuantitatCheckbox");
         
+        //inputs de tipus select
+        var txtQuantitatSelect = document.getElementById("txtQuantitatSelect");
+        var btnQuantitatSelect = document.getElementById("btnQuantitatSelect");
+        
         //nou camp a crear      
         var nouCampSelect = document.createElement("select");
+        
 
         var formNouForm;
         var nouForm;
@@ -123,6 +136,8 @@
         btnAcceptaTipusText.addEventListener("click",crearCamp);
         btnQuantitatRadio.addEventListener("click", creaRadioButton);
         btnQuantitatCheckbox.addEventListener("click", creaCheckbox);
+        btnQuantitatSelect.addEventListener("click", creaSelect);
+        
         
         function crearFormulari() {
             formCrearNomForm.style.display = "block";
@@ -165,7 +180,11 @@
                     divTypeCheckbox.style.display = "none";
                 }
             } else if (inputNouCampTypeSelect.checked) {
-
+                if (divTypeSelect.style.display === "none") {
+                    divTypeSelect.style.display = "block";
+                } else {
+                    divTypeSelect.style.display = "none";
+                }
             }
         }
         function getTextOption() {
@@ -262,12 +281,7 @@
                 var inputCheckbox = document.createElement("input");
                 var txtInputCheckbox = document.createTextNode(prompt("Introdueix valor del Checkbox " + (i+1)));
                 var lblTxtCheckbox = document.createElement("label");
-                /*
-                lblTxtRadi.appendChild(txtOpRadi);
-                formNouForm.appendChild(lblTxtRadi);
-                formNouForm.insertBefore(opRadi, lblTxtRadi);
-                formNouForm.insertBefore(espai, opRadi);
-                */
+                
                 lblTxtCheckbox.appendChild(txtInputCheckbox);
                 div.appendChild(lblTxtCheckbox);
                 div.insertBefore(inputCheckbox, lblTxtCheckbox);
@@ -288,7 +302,30 @@
             limpiaPantalla();
         }
         
-        
+        function creaSelect(){
+            var quantitat = txtQuantitatSelect.value;
+            var div = document.createElement("div");
+            div.setAttribute("id", "divSelect"+cont);
+            
+            var inputSelect = document.createElement("select");
+            for (var i = 0; i < quantitat; i++) {
+                var espai = document.createElement("br");
+                var optionSelect = document.createElement("option");
+                var txtInputSelect = document.createTextNode(prompt("Introdueix valor del Select " + (i+1)));
+                
+                optionSelect.setAttribute("value", txtInputSelect);
+                optionSelect.text = txtInputSelect;
+                inputSelect.appendChild(optionSelect);
+                //div.insertBefore(inputSelect, txtQuantitatSelect);
+                
+                
+            }
+            div.appendChild(inputSelect);
+            formNouForm.appendChild(div);
+            document.body.appendChild(formNouForm);
+
+            cont++;
+        }
         /*
          btnCrear = document.getElementById("btnCrea");
          
