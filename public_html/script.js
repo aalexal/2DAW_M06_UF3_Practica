@@ -1,3 +1,4 @@
+//inicialització d'elements
 var btnCrearNouForm = document.getElementById("btnIniciCrearNouForm");
 var btnFinalitzaCreacio = document.getElementById("btnFinalitzaCreacio");
 var form1 = document.getElementById("creaCamp");
@@ -59,6 +60,7 @@ var formNouForm;
 var nouForm;
 
 var cont = 0;
+var setted = false;
 
 //esdeveniments
 btnIniciCrearNouForm.addEventListener("click", crearFormulari);
@@ -88,6 +90,7 @@ function nouFormulari() {
     //formNouForm = document.createElement("form");
     formNouForm.setAttribute("id", inputTxtNomNouForm.value);
     formNouForm.setAttribute("border", "2px solid #f44336");
+    
 
     if (inputTxtNomNouForm.value != "") {
         if (divSelectTypeCamp.style.display === "none") {
@@ -98,6 +101,7 @@ function nouFormulari() {
         divSelectTypeCamp.style.display = "none";
         alert("Introdueix un nom per al formulari!")
     }
+    
 }
 
 function getOption() {
@@ -148,7 +152,7 @@ function crearCamp() {
     formNouForm.appendChild(lblNouInput);
     formNouForm.appendChild(nouCampForm);
     formNouForm.setAttribute("style", "position:relative");
-    
+    //setFormName();
     document.body.appendChild(formNouForm);
 
     limpiaPantalla();
@@ -190,6 +194,7 @@ function creaRadioButton() {
 
         formNouForm.appendChild(div);
         formNouForm.setAttribute("style", "position:relative");
+        //setFormName();
         opRadi.setAttribute("type", "radio");
         opRadi.setAttribute("id", "op" + cont + "-" + i);
         opRadi.setAttribute("name", "campRadi");
@@ -197,7 +202,7 @@ function creaRadioButton() {
 
         document.body.appendChild(formNouForm);
     }
-
+    
     cont++;
     limpiaPantalla();
 }
@@ -223,6 +228,7 @@ function creaCheckbox() {
 
         formNouForm.appendChild(div);
         formNouForm.setAttribute("style", "position:relative");
+        //setFormName();
         inputCheckbox.setAttribute("type", "checkbox");
         inputCheckbox.setAttribute("id", "checkbox" + cont + "-" + i);
         inputCheckbox.setAttribute("name", "campRadi");
@@ -250,8 +256,9 @@ function creaSelect() {
     div.appendChild(inputSelect);
     formNouForm.appendChild(div);
     formNouForm.setAttribute("style", "position:relative");
+    //setFormName();
     document.body.appendChild(formNouForm);
-
+    
     cont++;
     limpiaPantalla();
 }
@@ -282,4 +289,11 @@ function amagaElements(){
         divSelectTypeCamp.style.display = "none";
     }
     
+}
+function setFormName (){
+    if (!setted) {
+        var lblName = createTextNode(inputTxtNomNouForm.value);
+        formNouForm.appendChild(lblName);
+    }
+    setted = true;
 }
